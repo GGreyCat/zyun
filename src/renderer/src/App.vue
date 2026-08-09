@@ -90,7 +90,8 @@ const handlePluginMessage = (event: MessageEvent) => {
   if (data.type === 'zyfun-theme-request') {
     const savedCss = localStorage.getItem(STORAGE_KEY);
     if (savedCss && event.source) {
-      event.source.postMessage({
+      // ★★★ 修复：将 event.source 断言为 Window ★★★
+      (event.source as Window).postMessage({
         type: 'zyfun-theme-response',
         css: savedCss
       }, event.origin);
